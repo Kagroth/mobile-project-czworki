@@ -13,6 +13,7 @@ public class Clickable : MonoBehaviour {
     {
         Debug.Log("Jestem w Clickable - SetDiscHandler!");
         Debug.Log(manager.isPaused());
+
         if (manager.isPaused())
             return;
 

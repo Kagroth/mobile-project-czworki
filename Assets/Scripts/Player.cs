@@ -5,7 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    public PlayerColor playerColor;
+    private PlayerColor playerColor;
+
+    [SerializeField]
+    private bool active;
+
+    public void SetActive(bool activate)
+    {
+        active = activate;
+    }
+
+    public bool IsActive()
+    {
+        return active;
+    }
 
     public PlayerColor GetPlayerColor()
     {

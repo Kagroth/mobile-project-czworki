@@ -13,13 +13,18 @@ public class Manager : MonoBehaviour
     public Sprite greenDisc;
     public Sprite orangeDisc;
 
-    public Player playerOrange;
-    public Player playerGreen;
+    public Player playerPrefab;
+    private Player playerOrange;
+    private Player playerGreen;
 
     public PlayerColor currentPlayerColor;
 
     [SerializeField]
+    private GameMode gameMode;
+
+    [SerializeField]
     private bool paused = false;
+
 
     // Use this for initialization
     void Start()
@@ -33,6 +38,7 @@ public class Manager : MonoBehaviour
 
     public void Init()
     {
+        gameMode = MenuManager.Instance.gameMode;
         this.currentPlayerColor = PlayerColor.None;
         SetPause(false); 
         GameObject[] boardDiscGaps = GameObject.FindGameObjectsWithTag("Gap");
@@ -52,12 +58,24 @@ public class Manager : MonoBehaviour
     
     public void SetPlayers()
     {
+        playerOrange = Instantiate(playerPrefab);
+        playerGreen = Instantiate(playerPrefab);
+
+        playerOrange.SetPlayerColor(PlayerColor.Orange);
+        playerGreen.SetPlayerColor(PlayerColor.Green);
+
         currentPlayerColor = playerOrange.GetPlayerColor();
         GetComponent<UIController>().ChangeNextPlayerSprite(GetSprite(currentPlayerColor));
+
+        if (gameMode.Equals(GameMode.OneVsComputer))
+        {
+            playerOrange.SetActive(true);
+            playerGreen.SetActive(false);   
+        }
     }
 
     public void ChangeCurrentPlayer()
-    {
+    {   
         if (currentPlayerColor.Equals(playerOrange.GetPlayerColor()))
         {
             currentPlayerColor = playerGreen.GetPlayerColor();
@@ -68,6 +86,14 @@ public class Manager : MonoBehaviour
         }
 
         GetComponent<UIController>().ChangeNextPlayerSprite(GetSprite(currentPlayerColor));
+
+        playerOrange.SetActive(!playerOrange.IsActive());
+        playerGreen.SetActive(!playerOrange.IsActive());
+
+        if (gameMode.Equals(GameMode.OneVsComputer) && playerGreen.IsActive())
+        {
+            ComputerMove();
+        }
     }
 
     public bool isPaused()
@@ -78,6 +104,11 @@ public class Manager : MonoBehaviour
     public void SetPause(bool pause)
     {
         this.paused = pause;
+    }
+
+    public GameMode getGameMode()
+    {
+        return this.gameMode;
     }
 
     public int TwoDimensionToOneDimension(int cols, int row, int col)
@@ -117,31 +148,20 @@ public class Manager : MonoBehaviour
 
     public void SetDisc(int columnNumber)
     {
+        // Jezeli gramy z komputerem i nie jest nasza kolej to nie obslugujemy klikniecia
+        if (gameMode.Equals(GameMode.OneVsComputer) && playerOrange.IsActive() == false)
+            return;
+
         Debug.Log("Ustawiam dysk!");
-        Vector2Int coord = board.UpdateModel(columnNumber, MapPlayerColorToInt(currentPlayerColor));
+        Vector2Int coord = this.board.UpdateModel(columnNumber, MapPlayerColorToInt(currentPlayerColor));
 
         if (coord.x != (-1))
             RenderDisc(coord.x, coord.y);
         else
             return;
 
-        if (board.CheckWinCondition(MapPlayerColorToInt(currentPlayerColor)))
-        {
-            Debug.Log(string.Format("Gracz {0} wygral!", currentPlayerColor));
-            SetPause(true);
-            GetComponent<UIController>().ShowWinInfo(currentPlayerColor.ToString());
-        }
-        else
-        {
-            if(board.coverage == board.rows * board.columns)
-            {
-                Debug.Log(string.Format("Remis"));
-                SetPause(true);
-                Debug.Break();
-                
-                GetComponent<UIController>().ShowWinInfo("Remis");
-            }
-        }
+        
+        ComputeAndHandleWinCondition();
 
         ChangeCurrentPlayer();
     }
@@ -154,5 +174,125 @@ public class Manager : MonoBehaviour
             boardDiscGaps[TwoDimensionToOneDimension(board.columns, row, col)].GetComponent<Transform>().position,
             Quaternion.identity);
         go.GetComponent<DiscController>().SetSprite(GetSprite(currentPlayerColor));
+    }
+
+    // obsługa ruchu komputera
+    private void ComputerMove()
+    {
+        Debug.Log("Komputer wykonuje ruch!!!");
+        Debug.Log("Ustawiam dysk!");
+
+        Vector2Int coord;
+
+        int column = ComputeNextMove();
+
+        coord = RawSetDisc(column, playerGreen.GetPlayerColor());
+
+        //coord = RawSetDisc(Mathf.RoundToInt(Random.Range(0, board.columns - 1)));
+
+        RenderDisc(coord.x, coord.y);
+
+        ComputeAndHandleWinCondition();
+
+        ChangeCurrentPlayer();
+    }
+
+    public void ComputeAndHandleWinCondition()
+    {
+        if (board.CheckWinCondition(MapPlayerColorToInt(currentPlayerColor)))
+        {
+            Debug.Log(string.Format("Gracz {0} wygral!", currentPlayerColor));
+            SetPause(true);
+            GetComponent<UIController>().ShowWinInfo(currentPlayerColor.ToString());
+        }
+        else
+        {
+            if (board.coverage == board.rows * board.columns)
+            {
+                Debug.Log(string.Format("Remis"));
+                SetPause(true);
+                Debug.Break();
+
+                GetComponent<UIController>().ShowWinInfo("Remis");
+            }
+        }
+    }
+
+    public int ComputeNextMove()
+    {
+        Vector2Int coord;
+        bool IsWinMove = false;
+        bool IsPlayerWinMove = false;
+        int column;
+
+        // czy jest mozliwosc wygrania gry przez komputer
+        for (column = 0; column < board.columns; column++)
+        {
+            coord = RawSetDisc(column, PlayerColor.Green);
+
+            if (coord.x != (-1))
+            {
+                IsWinMove = board.CheckWinCondition(MapPlayerColorToInt(PlayerColor.Green));
+
+                if (IsWinMove)
+                {
+                    board.PopFromColumn(column);
+                    return column;
+                }
+                else
+                {
+                    board.PopFromColumn(column);
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        // czy jest mozliwosc wygrania gry przez gracza
+        for( column = 0; column < board.columns; column++ )
+        {
+            coord = RawSetDisc(column, PlayerColor.Orange);
+
+            if (coord.x != (-1))
+            {
+                IsPlayerWinMove = board.CheckWinCondition(MapPlayerColorToInt(PlayerColor.Orange));
+
+                if (IsPlayerWinMove)
+                {
+                    board.PopFromColumn(column);
+                    return column;
+                }
+                else
+                {
+                    board.PopFromColumn(column);
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        column = 0;
+
+        while(true)
+        {
+            column = Mathf.RoundToInt(Random.Range(0, board.columns - 1));
+            
+            coord = RawSetDisc(column, playerGreen.GetPlayerColor());
+
+            if( coord.x != (-1))
+            {
+                board.PopFromColumn(column);
+                return column;
+            }
+        }
+    }
+
+    public Vector2Int RawSetDisc(int columnNumber, PlayerColor playerColor)
+    {
+        return board.UpdateModel(columnNumber, MapPlayerColorToInt(playerColor));
     }
 }

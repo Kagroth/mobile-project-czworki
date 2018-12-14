@@ -55,6 +55,23 @@ public class UIController : MonoBehaviour {
         SceneManager.LoadScene("menu");
     }
 
+    public void SwitchMenuHandler()
+    {
+        GetComponent<MenuManager>().SwitchMenu();
+    }
+
+    public void PlayOneVsOneHandler()
+    {
+        GetComponent<MenuManager>().SetGameMode(GameMode.OneVsOne);
+        PlayGameHandler();
+    }
+
+    public void PlayOneVsComputerHandler()
+    {
+        GetComponent<MenuManager>().SetGameMode(GameMode.OneVsComputer);
+        PlayGameHandler();
+    }
+
     public void PlayGameHandler()
     {
         SceneManager.LoadScene("main");

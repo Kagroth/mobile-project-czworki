@@ -29,6 +29,23 @@ public class BoardModel : MonoBehaviour {
         return new Vector2Int(-1, -1);
     }
 
+    public void PopFromColumn(int col)
+    {
+        for(int row = 0; row < rows; row++)
+        {
+            int pos = manager.TwoDimensionToOneDimension(columns, row, col);
+
+            Debug.Log(pos);
+
+            if (boardData[pos] != 0)
+            {
+                boardData[pos] = 0;
+                coverage--;
+                return;
+            }
+        }
+    }
+
     // resetowanie planszy
     public void ClearModel()
     {
