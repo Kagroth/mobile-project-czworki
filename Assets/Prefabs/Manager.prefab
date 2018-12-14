@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1753275035151394}
+  m_IsPrefabParent: 1
+--- !u!1 &1753275035151394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4249713586102924}
+  - component: {fileID: 114943421256027150}
+  - component: {fileID: 114557259066244682}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4249713586102924
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753275035151394}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114557259066244682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753275035151394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf9821025ab01b4fbf141e18458645f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winInfoPopupPrefab: {fileID: 1335832912461252, guid: 91c64d9f23d199b4080aacdaf093af41,
+    type: 2}
+--- !u!114 &114943421256027150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753275035151394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb125567aa951e46b40c8050fbc2d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: {fileID: 114328524654572444, guid: f6da083d989de1343bdef3de388e49f6, type: 2}
+  discGap: {fileID: 1920856524226222, guid: 567ddc1bdf48b3b4eab89d715c1669a6, type: 2}
+  disc: {fileID: 1941567834304470, guid: 82568179bada20148a310df69103c6b0, type: 2}
+  startPosition: {fileID: 4093414335325386, guid: 9c319e9caec205046998e8935aca349a,
+    type: 2}
+  greenDisc: {fileID: 21300000, guid: e08ee7e7444599449a88e621bf0e8344, type: 3}
+  orangeDisc: {fileID: 21300000, guid: 3b151281f35320a40bbcb7124242051a, type: 3}
+  playerOrange: {fileID: 114741992812319486, guid: 1e5ab31d827db0e44ab70a1528b88ffd,
+    type: 2}
+  playerGreen: {fileID: 114992186088215604, guid: 9140562f32279a84f80c23e934d9a002,
+    type: 2}
+  currentPlayerColor: 1
+  paused: 1
