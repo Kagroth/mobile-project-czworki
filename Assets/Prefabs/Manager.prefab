@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf9821025ab01b4fbf141e18458645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winInfoPopupPrefab: {fileID: 1756235769952840, guid: 91c64d9f23d199b4080aacdaf093af41,
+  winInfoPopupPrefab: {fileID: 1514998166493150, guid: 91c64d9f23d199b4080aacdaf093af41,
     type: 2}
 --- !u!114 &114943421256027150
 MonoBehaviour:
@@ -70,8 +70,8 @@ MonoBehaviour:
   disc: {fileID: 1941567834304470, guid: 82568179bada20148a310df69103c6b0, type: 2}
   startPosition: {fileID: 4093414335325386, guid: 9c319e9caec205046998e8935aca349a,
     type: 2}
-  greenDisc: {fileID: 21300000, guid: e08ee7e7444599449a88e621bf0e8344, type: 3}
-  orangeDisc: {fileID: 21300000, guid: 3b151281f35320a40bbcb7124242051a, type: 3}
+  greenDisc: {fileID: 21300000, guid: f32aca742175f1c43a5889d1ec37dc6b, type: 3}
+  orangeDisc: {fileID: 21300000, guid: b1bd22283fe82a54d8db5a214ab86cc6, type: 3}
   playerPrefab: {fileID: 114741992812319486, guid: 1e5ab31d827db0e44ab70a1528b88ffd,
     type: 2}
   currentPlayerColor: 1

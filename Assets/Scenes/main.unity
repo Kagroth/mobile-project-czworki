@@ -899,7 +899,7 @@ Prefab:
         type: 2}
       propertyPath: winInfoPopupPrefab
       value: 
-      objectReference: {fileID: 1756235769952840, guid: 91c64d9f23d199b4080aacdaf093af41,
+      objectReference: {fileID: 1514998166493150, guid: 91c64d9f23d199b4080aacdaf093af41,
         type: 2}
     - target: {fileID: 114943421256027150, guid: 84d04db9c3dcea547beb01467ca475e8,
         type: 2}

@@ -7,7 +7,7 @@ public class BoardModel : MonoBehaviour {
     public int columns;
     public int rows;
     public int[] boardData;
-    public int coverage;
+    public int coverage; // ilosc kolek na planszy
 
     public Manager manager;
 
@@ -29,6 +29,7 @@ public class BoardModel : MonoBehaviour {
         return new Vector2Int(-1, -1);
     }
 
+    // usuniecie kolka z konkretnej kolumny
     public void PopFromColumn(int col)
     {
         for(int row = 0; row < rows; row++)
@@ -57,7 +58,7 @@ public class BoardModel : MonoBehaviour {
         coverage = 0;
     }
 
-    // sprawdzanie warunku zwycięstwa dla konkretnej wartości
+    // sprawdzanie warunku zwycięstwa dla konkretnego gracza
     public bool CheckWinCondition(int value)
     {
         // horyzontalnie

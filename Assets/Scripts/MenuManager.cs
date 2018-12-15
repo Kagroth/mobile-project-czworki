@@ -14,9 +14,11 @@ public class MenuManager : MonoBehaviour {
 
     private void Awake()
     {
+        // umozliwienie dostepu do tego obiektu z roznych scen
         DontDestroyOnLoad(this.gameObject);
         Instance = this;
     }
+
     // Use this for initialization
     void Start () {
         Screen.orientation = ScreenOrientation.Landscape;
@@ -30,11 +32,13 @@ public class MenuManager : MonoBehaviour {
 		
 	}
 
+    // ustawienie trybu rozgrywki
     public void SetGameMode(GameMode mode)
     {
         this.gameMode = mode;
     }
 
+    // przelaczanie miedzy glownym menu a menu wyboru rozgrywki
     public void SwitchMenu()
     {
         mainMenu.SetActive(!mainMenu.activeSelf);

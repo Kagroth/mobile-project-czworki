@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// kontroler interfejsu
 public class UIController : MonoBehaviour {
 
     public GameObject winInfoPopupPrefab;
@@ -13,11 +14,13 @@ public class UIController : MonoBehaviour {
 	void Start () {
 	}
 
+    // ustawienie obrazka jako informacji kto wykonuje teraz ruch
     public void ChangeNextPlayerSprite(Sprite spr)
     {
         GameObject.FindGameObjectWithTag("NextPlayerImage").GetComponent<Image>().sprite = spr;
     }
 
+    // wyswietla komunikat o zwyciestwie/remisie
     public void ShowWinInfo(string winnerColor)
     {
         winInfoPopup = Instantiate(winInfoPopupPrefab);
@@ -29,18 +32,19 @@ public class UIController : MonoBehaviour {
 
         string message;
 
-        if(winnerColor.Equals("Remis"))
+        if(winnerColor.Equals("Draw"))
         {
-            message = "Remis!";
+            message = "Draw!";
         }
         else
         {
-            message = string.Format("Gracz {0} wygrał!", winnerColor);
+            message = string.Format("Player {0} win!", winnerColor);
         }
 
         winInfoPopup.GetComponentInChildren<Text>().text = message;
     }
 
+    // obsługa ponownego uruchomienia rozgrywki
     public void PlayAgainHandler()
     {
         Debug.Log("Gramy jeszcze raz!");
@@ -48,6 +52,7 @@ public class UIController : MonoBehaviour {
         PlayGameHandler();
     }
 
+    // obsługa zakonczenia rozgrywki
     public void EndHandler()
     {
         Debug.Log("Wracamy do menu glownego!");
@@ -55,28 +60,33 @@ public class UIController : MonoBehaviour {
         SceneManager.LoadScene("menu");
     }
 
+    // obsluga przelaczania menu w Menu głównym
     public void SwitchMenuHandler()
     {
         GetComponent<MenuManager>().SwitchMenu();
     }
 
+    // obsługa rozpoczęcia rozgrywki w tyrbie gracz vs gracz
     public void PlayOneVsOneHandler()
     {
         GetComponent<MenuManager>().SetGameMode(GameMode.OneVsOne);
         PlayGameHandler();
     }
 
+    // obsługa rozpoczęcia rozgrywki w trybie gracz vs komputer
     public void PlayOneVsComputerHandler()
     {
         GetComponent<MenuManager>().SetGameMode(GameMode.OneVsComputer);
         PlayGameHandler();
     }
 
+    // obsługa rozpoczęcia rozgrywki - załadowanie sceny
     public void PlayGameHandler()
     {
         SceneManager.LoadScene("main");
     }
 
+    // obsługa wyjscia z aplikacji
     public void QuitGameHandler()
     {
         Debug.Break();

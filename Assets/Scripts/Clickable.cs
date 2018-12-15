@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// obsluga elementow interfejsu ktory mozna kliknac
 public class Clickable : MonoBehaviour {
 
     public Manager manager;
     //public BoardModel board;
     public int columnNumber;
 
+    // obsluga wyboru kolumny
     public void SetDiscHandler()
     {
         Debug.Log("Jestem w Clickable - SetDiscHandler!");
