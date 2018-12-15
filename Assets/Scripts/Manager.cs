@@ -279,13 +279,13 @@ public class Manager : MonoBehaviour
 
         while(true)
         {
-            column = Mathf.RoundToInt(Random.Range(0, board.columns - 1));
-            
+            column = Mathf.RoundToInt(Random.Range(0, board.columns));
             coord = RawSetDisc(column, playerGreen.GetPlayerColor());
 
             if( coord.x != (-1))
             {
                 board.PopFromColumn(column);
+                Debug.Log("Kolumna : " + column + "!!!" );
                 return column;
             }
         }
